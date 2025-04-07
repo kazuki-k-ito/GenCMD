@@ -9,4 +9,9 @@ Say goodbye to CLI tool development woes! With `gencmd`, your ideas will take sh
 **How to Use:**
 
 1.  `gencmd config`: Set up the configuration for your CLI tool. 🛠️
-3.  `gencmd ask <your question>`: Ask Gemini a question and get a command as a response! 💬
+2.  `gencmd ask <your question>`: Ask Gemini a question and get a command as a response! 💬
+
+```
+❯ gencmd ask "how to display hoge"
+echo hoge
+```
