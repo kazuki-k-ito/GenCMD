@@ -6,6 +6,11 @@ Say goodbye to CLI tool development woes! With `gencmd`, your ideas will take sh
 
 *   📝 Generate commands from natural language using Gemini.
 
+**How to Install:**
+```bash
+go install github.com/kazuki-k-ito/GenCMD@latest
+```
+
 **How to Use:**
 
 1.  `gencmd config`: Set up the configuration for your CLI tool. 🛠️
