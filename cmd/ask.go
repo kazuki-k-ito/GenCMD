@@ -4,6 +4,9 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
+	"path/filepath"
+	"runtime"
 	"strings"
 	"text/template"
 
@@ -44,7 +47,7 @@ var askCmd = &cobra.Command{
 
 		model := client.GenerativeModel(config.Model)
 
-		resp, err := model.GenerateContent(ctx, genai.Text(buildQuery(query, config.Shell, config.OperationSystem)))
+		resp, err := model.GenerateContent(ctx, genai.Text(buildQuery(query)))
 		if err != nil {
 			log.Fatal(err)
 			return
@@ -63,7 +66,7 @@ func init() {
 	rootCmd.AddCommand(askCmd)
 }
 
-func buildQuery(query string, shell string, os string) string {
+func buildQuery(query string) string {
 	tmplStr := `You are a command-line tool. Convert the following request into a command.
 The request is: {{.Query}}
 Make sure to generate commands tailored to the shell you will use ({{.Shell}}) on ({{.OS}}).
@@ -76,9 +79,36 @@ Ensure the command is written as a one-liner.
 		log.Fatal(err)
 	}
 	var result strings.Builder
-	err = tmpl.Execute(&result, map[string]interface{}{"Query": query, "Shell": shell, "OS": os})
+	err = tmpl.Execute(&result, map[string]interface{}{
+		"Query": query,
+		"Shell": getShell(),
+		"OS":    getOperationSystem(),
+	})
 	if err != nil {
 		log.Fatal(err)
 	}
 	return result.String()
+}
+
+func getShell() string {
+	defaultShell := os.Getenv("SHELL")
+	if defaultShell == "" {
+		return "bash"
+	}
+	return filepath.Base(defaultShell)
+}
+
+func getOperationSystem() string {
+	os := runtime.GOOS
+
+	switch os {
+	case "windows":
+		return "Windows"
+	case "darwin":
+		return "MacOS"
+	case "linux":
+		return "Linux"
+	default:
+		return "MacOS"
+	}
 }

@@ -9,10 +9,8 @@ import (
 )
 
 type Config struct {
-	APIKey          string `yaml:"api_key"`
-	Shell           string `yaml:"shell"`
-	Model           string `yaml:"model"`
-	OperationSystem string `yaml:"operation_system"`
+	APIKey string `yaml:"api_key"`
+	Model  string `yaml:"model"`
 }
 
 func getConfigFilePath() (string, error) {
@@ -23,17 +21,15 @@ func getConfigFilePath() (string, error) {
 	return filepath.Join(homeDir, ".gen_cmd_config.yaml"), nil
 }
 
-func saveConfig(apiKey string, shell string, model string, operationSystem string) error {
+func saveConfig(apiKey string, model string) error {
 	configFilePath, err := getConfigFilePath()
 	if err != nil {
 		return err
 	}
 
 	config := Config{
-		APIKey:          apiKey,
-		Shell:           shell,
-		Model:           model,
-		OperationSystem: operationSystem,
+		APIKey: apiKey,
+		Model:  model,
 	}
 
 	data, err := yaml.Marshal(config)

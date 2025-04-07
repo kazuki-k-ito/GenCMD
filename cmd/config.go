@@ -24,34 +24,20 @@ var configCmd = &cobra.Command{
 			return
 		}
 
-		fmt.Print("Enter using shell(e.g., bash, zsh, fish) default:(bash) : ")
-		shell, _ := reader.ReadString('\n')
-		shell = strings.TrimSpace(shell)
-		if shell == "" {
-			shell = "bash"
-		}
-
-		fmt.Print("Enter your using model. default:(gemini-2.0-flash): ")
+		fmt.Print("Enter gemini model. default:(gemini-2.0-flash): ")
 		model, _ := reader.ReadString('\n')
 		model = strings.TrimSpace(model)
 		if model == "" {
 			model = "gemini-2.0-flash"
 		}
 
-		fmt.Print("Enter your operating system (e.g., Linux, MacOS, Windows) default:(MacOS): ")
-		operationSystem, _ := reader.ReadString('\n')
-		operationSystem = strings.TrimSpace(operationSystem)
-		if operationSystem == "" {
-			operationSystem = "MacOS"
-		}
-
-		err := saveConfig(apiKey, shell, model, operationSystem)
+		err := saveConfig(apiKey, model)
 		if err != nil {
 			fmt.Println("Failed to save config:", err)
 			return
 		}
 
-		fmt.Println("API key and shell set successfully!")
+		fmt.Println("API key and model set successfully!")
 	},
 }
 
