@@ -1,4 +1,4 @@
-module gencmd
+module github.com/kazuki-k-ito/GenCMD
 
 go 1.23.4
 

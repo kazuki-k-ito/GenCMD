@@ -1,9 +1,6 @@
-/*
-Copyright © 2025 NAME HERE <EMAIL ADDRESS>
-*/
 package main
 
-import "gencmd/cmd"
+import "github.com/kazuki-k-ito/GenCMD/cmd"
 
 func main() {
 	cmd.Execute()
