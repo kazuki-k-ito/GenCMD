@@ -44,7 +44,7 @@ var askCmd = &cobra.Command{
 
 		model := client.GenerativeModel(config.Model)
 
-		resp, err := model.GenerateContent(ctx, genai.Text(buildQuery(query, config.Shell)))
+		resp, err := model.GenerateContent(ctx, genai.Text(buildQuery(query, config.Shell, config.OperationSystem)))
 		if err != nil {
 			log.Fatal(err)
 			return
@@ -63,10 +63,11 @@ func init() {
 	rootCmd.AddCommand(askCmd)
 }
 
-func buildQuery(query string, shell string) string {
+func buildQuery(query string, shell string, os string) string {
 	tmplStr := `You are a command-line tool. Convert the following request into a command.
 The request is: {{.Query}}
-The shell being used is {{.Shell }}.
+Make sure to generate commands tailored to the shell you will use ({{.Shell}}) on ({{.OS}}).
+When a file path is required, using /path/to/filename.
 Provide only the command as a response, without code blocks or additional formatting, so it can be copied and used immediately.
 Ensure the command is written as a one-liner.
 `
@@ -75,7 +76,7 @@ Ensure the command is written as a one-liner.
 		log.Fatal(err)
 	}
 	var result strings.Builder
-	err = tmpl.Execute(&result, map[string]interface{}{"Query": query, "Shell": shell})
+	err = tmpl.Execute(&result, map[string]interface{}{"Query": query, "Shell": shell, "OS": os})
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -24,7 +24,7 @@ var configCmd = &cobra.Command{
 			return
 		}
 
-		fmt.Print("Enter using shell(bash,zsh,fish...) default:(bash) : ")
+		fmt.Print("Enter using shell(e.g., bash, zsh, fish) default:(bash) : ")
 		shell, _ := reader.ReadString('\n')
 		shell = strings.TrimSpace(shell)
 		if shell == "" {
@@ -38,7 +38,14 @@ var configCmd = &cobra.Command{
 			model = "gemini-2.0-flash"
 		}
 
-		err := saveConfig(apiKey, shell, model)
+		fmt.Print("Enter your operating system (e.g., Linux, MacOS, Windows) default:(MacOS): ")
+		operationSystem, _ := reader.ReadString('\n')
+		operationSystem = strings.TrimSpace(operationSystem)
+		if operationSystem == "" {
+			operationSystem = "MacOS"
+		}
+
+		err := saveConfig(apiKey, shell, model, operationSystem)
 		if err != nil {
 			fmt.Println("Failed to save config:", err)
 			return
