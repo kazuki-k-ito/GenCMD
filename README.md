@@ -8,7 +8,7 @@ Say goodbye to CLI tool development woes! With `gencmd`, your ideas will take sh
 
 **How to Install:**
 ```bash
-go install github.com/kazuki-k-ito/GenCMD@latest
+go install github.com/kazuki-k-ito/GenCMD@v0.1.1
 ```
 
 **How to Use:**
